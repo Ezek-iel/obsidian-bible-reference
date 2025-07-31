@@ -123,6 +123,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const suggestions = await getSuggestionsFromQuery(
       bookVerseQuery,
       this.settings,
+      this.plugin,
       translationQuery
     )
 

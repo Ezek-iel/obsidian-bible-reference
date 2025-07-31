@@ -3,6 +3,7 @@ import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BOOK_REG } from './regs'
 import { getFullBookName } from './bookNameReference'
 import { getBibleVersion } from '../data/BibleVersionCollection'
+import BibleReferencePlugin from "src/main"
 
 /**
  * Get suggestions from string query
@@ -12,9 +13,11 @@ import { getBibleVersion } from '../data/BibleVersionCollection'
 export const getSuggestionsFromQuery = async (
   queryWithoutPrefix: string,
   settings: BibleReferencePluginSettings,
-  translation?: string
+  plugin: BibleReferencePlugin,
+  translation?: string,
 ): Promise<VerseSuggesting[]> => {
-  console.debug(
+  //!Console.log for the time being
+  console.log(
     'get suggestion for query ',
     queryWithoutPrefix.toLowerCase(),
     translation,
@@ -44,6 +47,8 @@ export const getSuggestionsFromQuery = async (
   const selectedBibleVersion = getBibleVersion(
     translation ? translation : settings.bibleVersion
   )
+  // !Console.log here again
+  console.log(selectedBibleVersion)
   const bookName = getFullBookName(rawBookName, selectedBibleVersion?.code)
   console.debug('selected bookName', bookName)
 
@@ -51,9 +56,10 @@ export const getSuggestionsFromQuery = async (
   const suggestingVerse = new VerseSuggesting(
     settings,
     bookName,
+    plugin,
     chapterNumber,
     verseNumber,
-    verseEndNumber
+    verseEndNumber,
   )
 
   console.debug(

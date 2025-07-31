@@ -8,4 +8,8 @@ export const BibleAPISourceCollection = {
     apiUrl: 'https://bolls.life/get-text', // 'https://bolls.life',
     //  self hosted proxy for bolls life api, https://bible-api-bff.bai.uno/bolls-life
   },
+  offlineProviderVersion: {
+    name: 'offline',
+    apiUrl: "does not exist. is offline"
+  }
 }

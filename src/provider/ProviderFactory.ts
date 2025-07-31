@@ -3,6 +3,8 @@ import { BibleAPIDotComProvider } from './BibleAPIDotComProvider'
 import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { BollyLifeProvider } from './BollyLifeProvider'
+import { OfflineBibleProvider } from './OfflineBibleProvider'
+import BibleReferencePlugin from 'src/main'
 
 /**
  * A factory for Bible API providers.
@@ -39,9 +41,14 @@ export class ProviderFactory {
    * @constructor
    */
   public BuildBibleVersionAPIAdapterFromIBibleVersion(
-    bibleVersion: IBibleVersion
+    bibleVersion: IBibleVersion,
+    plugin: BibleReferencePlugin
   ): BaseBibleAPIProvider {
+    console.log(bibleVersion.apiSource)
     switch (bibleVersion.apiSource) {
+      case BibleAPISourceCollection.offlineProviderVersion: {
+        return new OfflineBibleProvider(bibleVersion, plugin)
+      }
       case BibleAPISourceCollection.bibleApi: {
         return new BibleAPIDotComProvider(bibleVersion)
       }

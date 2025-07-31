@@ -3,6 +3,7 @@ import {
   DEFAULT_SETTINGS,
   OutgoingLinkPositionEnum,
 } from '../data/constants'
+import BibleReferencePlugin from 'src/main'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { IVerse } from '../interfaces/IVerse'
 import { ProviderFactory } from '../provider/ProviderFactory'
@@ -19,15 +20,17 @@ export class VerseSuggesting
   implements IVerseSuggesting
 {
   public bibleVersion: string
+  private plugin: BibleReferencePlugin
   private bibleProvider: BaseBibleAPIProvider
 
   // todo make constructor consistent with other classes
   constructor(
     settings: BibleReferencePluginSettings,
     bookName: string,
+    plugin: BibleReferencePlugin,
     chapterNumber: number,
     verseNumber: number,
-    verseNumberEnd?: number
+    verseNumberEnd?: number,
   ) {
     super(settings, {
       bookName: bookName,
@@ -35,6 +38,7 @@ export class VerseSuggesting
       verseNumber: verseNumber,
       verseNumberEnd: verseNumberEnd,
     })
+    this.plugin = plugin
     this.bibleVersion = settings.bibleVersion
   }
 
@@ -103,14 +107,15 @@ export class VerseSuggesting
       console.debug('match to default language plus version')
     }
     const bibleVersion = getBibleVersion(this.bibleVersion)
+  
     if (
       !this.bibleProvider ||
       this.bibleProvider.BibleVersionKey !== bibleVersion?.key
     ) {
-      // make sure this is only 1 adapter, and it is the same bible version
+      //! make sure this is only 1 adapter, and it is the same bible version
       this.bibleProvider =
         ProviderFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
-          bibleVersion
+          bibleVersion, this.plugin
         )
     }
     return this.bibleProvider.query(

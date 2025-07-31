@@ -8,6 +8,14 @@ import { BibleAPISourceCollection } from './BibleApiSourceCollection'
 export const DEFAULT_BIBLE_VERSION_KEY = 'bbe'
 export const BibleVersionCollectionEnglish = [
   {
+    key: "kjv",
+    versionName: "King James Bible Offline",
+    language: 'English', 
+    code: 'en',
+    apiSource: BibleAPISourceCollection.offlineProviderVersion,
+    infoUrl: "",
+  },
+  {
     key: 'amp',
     versionName: 'Amplified Bible',
     language: 'English',

@@ -16,3 +16,6 @@ data.json
 .DS_Store
 .eslintignore
 .stignore
+
+# Other application-specific files
+.yaak

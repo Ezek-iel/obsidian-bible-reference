@@ -31,6 +31,7 @@ export default class BibleReferencePlugin extends Plugin {
   private ribbonButton?: HTMLElement
   private statusBarIndicator?: HTMLElement
 
+
   async onload() {
     console.debug('loading plugin -', APP_NAMING.appName)
 
@@ -61,6 +62,10 @@ export default class BibleReferencePlugin extends Plugin {
 
     this.initStatusBarIndicator()
     EventStats.logRecord(this.settings.optOutToEvents)
+  }
+
+  public getAdapter() {
+    return this.app.vault
   }
 
   onunload() {
